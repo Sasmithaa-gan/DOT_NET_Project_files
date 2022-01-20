@@ -1,0 +1,443 @@
+basic.cs
+
+namespace project1.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web;
+
+    public partial class basic
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public basic()
+        {
+            this.educations = new HashSet<education>();
+            this.skills = new HashSet<skill>();
+            this.works = new HashSet<work>();
+            this.leaves = new HashSet<leave>();
+            this.raises = new HashSet<raise>();
+        }
+        [Required(ErrorMessage = "Please enter Employee ID")]
+        [Display(Name = "Employee ID : ")]
+        public int empid { get; set; }
+        [Required(ErrorMessage = "Please enter Name")]
+        [Display(Name = "Employee Name : ")]
+        [StringLength(20)]
+        public string empname { get; set; }
+        [Required(ErrorMessage = "Please select Employee Type")]
+        [Display(Name = "Employee Type : ")]
+        public string emptype { get; set; }
+        [Required(ErrorMessage = "Please enter Department ID")]
+        [Range(101, 104, ErrorMessage = "Department ID  Must be between 101 to 104")]
+        [Display(Name = "Department ID: ")]
+        public Nullable<int> deptid { get; set; }
+        [Required(ErrorMessage = "Please enter Date of Birth")]
+        [Display(Name = "Date of Birth : ")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> dob { get; set; }
+
+        [Required(ErrorMessage = "Please enter email ")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email :")]
+        [MaxLength(50)]
+        public string email { get; set; }
+        [Display(Name = "Mobile Number: ")]
+        [Required(ErrorMessage = "Mobile Number is required.")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
+        public string mobile { get; set; }
+        [Display(Name = "Address: ")]
+        [Required(ErrorMessage = "Address is required.")]
+        public string address { get; set; }
+        [Required(ErrorMessage = "Please enter Date of Birth")]
+        [Display(Name = "Date of Joining : ")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> dateofjoin { get; set; }
+        [Required(ErrorMessage = "Please select Gender")]
+        [Display(Name = "Gender : ")]
+        public string gender { get; set; }
+        [DisplayName("Employee Photo : ")]
+        public string emp_photo_path { get; set; }
+        public HttpPostedFileBase ImageFile { get; set; }
+        public virtual department department { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<education> educations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<skill> skills { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<work> works { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<leave> leaves { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<raise> raises { get; set; }
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------
+department.cs
+
+namespace project1.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class department
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public department()
+        {
+            this.basics = new HashSet<basic>();
+        }
+    
+        public int id { get; set; }
+        [Required(ErrorMessage = "Please enter Department ID")]
+        [Display(Name = "Department ID : ")]
+        public int dept_id { get; set; }
+        //[Required(ErrorMessage = "Please enter Department ID")]
+        [Display(Name = "Department Name : ")]
+        public string dept_name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<basic> basics { get; set; }
+    }
+}
+-------------------------------------------------------------------------------------------------------------------
+education.cs
+
+namespace project1.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class education
+    {
+        public int id { get; set; }
+        [Required(ErrorMessage = "Please enter Employee ID")]
+        [Display(Name = "Employee ID : ")]
+        public Nullable<int> empid { get; set; }
+        [Required(ErrorMessage = "Please enter 10th Percentage")]
+        [Display(Name = "10th Percentage : ")]
+        public string Tenth_percentage { get; set; }
+        [Required(ErrorMessage = "Please select one")]
+        [Display(Name = "10th Year of passing: ")]
+        public Nullable<int> Tenth_yop { get; set; }
+        [Required(ErrorMessage = "Please enter 12th Percentage")]
+        [Display(Name = "12th Percentage : ")]
+        public string Twelfth_percentage { get; set; }
+        [Required(ErrorMessage = "Please select one")]
+        [Display(Name = "12th Year of passing :")]
+        public Nullable<int> Twelfth_yop { get; set; }
+        [Required(ErrorMessage = "Please enter UG Percentage")]
+        [Display(Name = "UG Percentage : ")]
+        public string UG_percentage { get; set; }
+        [Required(ErrorMessage = "Please select one")]
+        [Display(Name = "UG Year of passing :")]
+        public Nullable<int> UG_yop { get; set; }
+        [Required(ErrorMessage = "This field is Required")]
+        [Display(Name = "PG Percentage : ")]
+        public string PG_percentage { get; set; }
+        [Required(ErrorMessage = "This field is Required")]
+        [Display(Name = "PG Year of Passing : ")]
+        public string PG_yop { get; set; }
+    
+        public virtual basic basic { get; set; }
+    }
+}
+------------------------------------------------------------------------------------------------------------------
+forgot.cs
+
+namespace project1.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class forgot
+    {
+        public int id { get; set; }
+        [Required(ErrorMessage = "Please enter email ")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email :")]
+        [MaxLength(50)]
+        //[RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Invalid email")]
+        public string emailid { get; set; }
+        [Required(ErrorMessage = "Choose a question")]
+        [Display(Name = "Security Question : ")]
+        public string securityquestion { get; set; }
+        [Required(ErrorMessage = "You must answer for the above question")]
+        [Display(Name = "Answer : ")]
+        public string securityanswer { get; set; }
+        [Required]
+        [Display(Name = "New Password : ")]
+        [DataType(DataType.Password)]
+        [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).+$", ErrorMessage = "Password should contain atleast one uppercase letter, one lowercase letter,one special character and one number")]
+        public string newpassword { get; set; }
+        [Required]
+        [Display(Name = "Confirm Password : ")]
+        [DataType(DataType.Password)]
+        [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).+$", ErrorMessage = "Password should contain atleast one uppercase letter, one lowercase letter,one special character and one number")]
+        [Compare("newpassword", ErrorMessage = "Password Mismatch")]
+        public string confirmpassword { get; set; }
+    }
+}
+-------------------------------------------------------------------------------------------------------------------
+leave.cs
+
+namespace project1.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class leave
+    {
+        public int id { get; set; }
+        [Required(ErrorMessage = "Employee id is required")]
+        [Display(Name = "Employee ID:")]
+        public Nullable<int> empid { get; set; }
+        [Required(ErrorMessage = "Please select type of leave")]
+        [Display(Name = "Type of Leave : ")]
+        public string typeofleave { get; set; }
+        [Required(ErrorMessage = "Select your start date")]
+        [Display(Name = "Start date:")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> startdate { get; set; }
+        [Required(ErrorMessage = "Select your end date")]
+        [Display(Name = "End date:")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> enddate { get; set; }
+
+        [Required(ErrorMessage = "Please provide comments")]
+        [Display(Name = "Comments :")]
+        public string comments { get; set; }
+        //[Required(ErrorMessage = "Please select the checkbox to apply for leave")]
+        [Display(Name = "Apply for leave? ")]
+        public string ApplyforLeave { get; set; }
+    
+        public virtual basic basic { get; set; }
+    }
+}
+-----------------------------------------------------------------------------------------------------------------
+login.cs
+
+namespace project1.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class login
+    {
+        public int id { get; set; }
+        [Required(ErrorMessage = "Please enter email ")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email :")]
+        [MaxLength(50)]
+        //[RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Invalid email")]
+        public string emailid { get; set; }
+        [Required(ErrorMessage = "Please enter Password ")]
+        [Display(Name = "Password : ")]
+        [DataType(DataType.Password)]
+        [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).+$", ErrorMessage = "Password should contain atleast one uppercase letter, one lowercase letter,one special character and one number")]
+        public string password { get; set; }
+    }
+}
+------------------------------------------------------------------------------------------------------------------
+raise.cs
+
+namespace project1.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class raise
+    {
+        public int id { get; set; }
+        [Required(ErrorMessage = "Employee id is required")]
+        [Display(Name = "Employee ID:")]
+        public Nullable<int> empid { get; set; }
+        [Required(ErrorMessage = "Enter your current location")]
+        [Display(Name = "Current Location:")]
+        public string curloc { get; set; }
+        [Required(ErrorMessage = "Provide your preferred contact timing")]
+        [Display(Name = "Preferred Contact Timing :")]
+        public string precontim { get; set; }
+        [Required(ErrorMessage = "Give short description")]
+        [Display(Name = "Short Description :")]
+        public string shortdes { get; set; }
+        [Required(ErrorMessage = "This field is Required")]
+        [Display(Name = "Description :")]
+        public string des { get; set; }
+    
+        public virtual basic basic { get; set; }
+    }
+}
+-----------------------------------------------------------------------------------------------------------------
+signup.cs
+
+namespace project1.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class signup
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public signup()
+        {
+            this.UserRolesMappings = new HashSet<UserRolesMapping>();
+        }
+    
+        public int id { get; set; }
+        [Required(ErrorMessage = "Please enter Name")]
+        [Display(Name = "Name : ")]
+        [StringLength(20)]
+        public string name { get; set; }
+        [Required(ErrorMessage = "Please enter Employee ID")]
+        [Display(Name = "Employee ID : ")]
+        public string empid { get; set; }
+        [Display(Name = "Mobile :")]
+        [Required(ErrorMessage = "Mobile Number is required.")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
+        public string mobileno { get; set; }
+        [Required(ErrorMessage ="Please enter Date of Birth")]
+        [Display(Name = "Date of Birth : ")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> dob { get; set; }
+
+        [Required(ErrorMessage = "Please enter email ")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email :")]
+        [MaxLength(50)]
+        //[RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Invalid email")]
+        public string emailid { get; set; }
+        [Required(ErrorMessage = "Please enter Password ")]
+        [Display(Name = "Password : ")]
+        [DataType(DataType.Password)]
+        [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).+$", ErrorMessage = "Password should contain atleast one uppercase letter, one lowercase letter,one special character and one number")]
+        public string password { get; set; }
+        [Required(ErrorMessage = "Re-enter Password ")]
+        [Display(Name = "Confirm Password : ")]
+        [DataType(DataType.Password)]
+        [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).+$", ErrorMessage = "Password should contain atleast one uppercase letter, one lowercase letter,one special character and one number")]
+        [System.ComponentModel.DataAnnotations.Compare("password", ErrorMessage = "Password Mismatch")]
+        public string confirmpassword { get; set; }
+        [Required(ErrorMessage = "Choose a question")]
+        [Display(Name = "Security Question : ")]
+        public string securityquestion { get; set; }
+        [Required(ErrorMessage = "You must answer for the above question")]
+        [Display(Name = "Answer : ")]
+        public string securityanswer { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRolesMapping> UserRolesMappings { get; set; }
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------
+skill.cs
+
+namespace project1.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class skill
+    {
+        public int id { get; set; }
+        [Required(ErrorMessage = "Please enter Employee ID")]
+        [Display(Name = "Employee ID : ")]
+        public Nullable<int> empid { get; set; }
+        [Required]
+        [Display(Name = "Primary Skills :")]
+        public string primary_skills { get; set; }
+        
+        [Display(Name = "Other Skills: ")]
+        public string other_skills { get; set; }
+    
+        public virtual basic basic { get; set; }
+    }
+}
+-----------------------------------------------------------------------------------------------------------------
+work.cs
+
+namespace project1.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class work
+    {
+        public int id { get; set; }
+        [Required(ErrorMessage = "Please enter Employee ID")]
+        [Display(Name = "Employee ID : ")]
+        public Nullable<int> empid { get; set; }
+        [Required]
+        [Display(Name = "Previously worked company Name:")]
+        public string previous_emp_comp_name { get; set; }
+        //[Required(ErrorMessage ="Select any one")]
+        [Display(Name = "Years of Experience:")]
+        public string year_exp { get; set; }
+        [Required]
+        [Display(Name = "Work domain:")]
+        public string work_domain { get; set; }
+    
+        public virtual basic basic { get; set; }
+    }
+}
+---------------------------------------------------------------------------------------------------------------------
+reimburse.cs
+
+namespace project1.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class reimburse
+    {
+        public int id { get; set; }
+        [Required(ErrorMessage = "Please enter Employee ID")]
+        [Display(Name = "Employee ID : ")]
+        public Nullable<int> empid { get; set; }
+        [Required]
+        [Display(Name = "Type of Claim: ")]
+        public string ct { get; set; }
+        [Required]
+        [Display(Name = "Bill No:")]
+        public Nullable<int> bno { get; set; }
+        [Required]
+        [Display(Name = "Date:")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> bd { get; set; }
+        [Required]
+        [Display(Name = "Bill amount:")]
+        public Nullable<int> bamnt { get; set; }
+        [Required]
+        [Display(Name = "Gst amount:")]
+        public Nullable<int> gstamnt { get; set; }
+        [Required]
+        [Display(Name = "Base amount:")]
+        public Nullable<int> baamnt { get; set; }
+        [Display(Name = "Remarks:")]
+        public string remarks { get; set; }
+        [Required]
+        [Display(Name = "Seller Gst number:")]
+        public Nullable<int> segstin { get; set; }
+    
+        public virtual basic basic { get; set; }
+    }
+}
